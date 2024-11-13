@@ -27,6 +27,7 @@ import os
 if os.name == "nt":
     from findapp.windows import WindowsAppFinder as AppFinder
 else:
+    # TODO: Check for MacOS!
     from findapp.posix import PosixAppFinder as AppFinder
 
 def findapp(binary_name, **kwargs):
