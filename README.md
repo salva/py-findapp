@@ -119,13 +119,9 @@ Contributions are welcome! If you encounter bugs or have suggestions for improve
 
 GitHub Repository: [FindApp on GitHub](https://github.com/salva/py-findapp)
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Copyright
 
 Copyright (c) 2024 Salvador Fandiño ([sfandino@yahoo.com](mailto:sfandino@yahoo.com)).
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
