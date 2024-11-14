@@ -1,3 +1,4 @@
+import os
 import winreg
 import pathlib
 from findapp.base import BaseAppFinder
@@ -18,7 +19,6 @@ class WindowsAppFinder(BaseAppFinder):
                                 registry_roots=None, registry_paths=None,
                                 **kwargs):
         search_paths = []
-
         if registry_roots is None:
             registry_roots = _default_registry_roots
 
@@ -39,15 +39,22 @@ class WindowsAppFinder(BaseAppFinder):
 
     @classmethod
     def _get_common_paths(cls, app_name=None, vendor_name=None, **kwargs):
-        search_paths = []
+        pre_search_paths = []
         for ev in ["PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA", "APPDATA"]:
             value = os.getenv(ev)
             if value is not None:
-                search_paths.append(Path(value)/app_name)
+                pre_search_paths.append(pathlib.Path(value))
         for ev in ["PROGRAMDATA", "APPDATA"]:
             value = os.getenv(ev)
             if value is not None:
-                search_paths.append(Path(value) / "Microsoft/Windows/Start Menu/Programs"/app_name)
+                pre_search_paths.append(pathlib.Path(value) / "Microsoft/Windows/Start Menu/Programs")
+
+        search_paths = []
+        for pre_search_path in pre_search_paths:
+            if vendor_name is not None:
+                search_path.append(pre_search_path / vendor_name / app_name)
+            search_paths.append(pre_search_path / app_name)
+
         return search_paths
 
     @classmethod
