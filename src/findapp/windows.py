@@ -27,8 +27,8 @@ class WindowsAppFinder(BaseAppFinder):
             if vendor_name is not None:
                 registry_paths.insert(0, f"SOFTWARE\\{vendor_name}\\{app_name}")
 
-        for path in _registry_paths:
-            for root in _registry_roots:
+        for path in registry_paths:
+            for root in registry_roots:
                 try:
                     with winreg.OpenKey(root, path) as key:
                         install_path, _ = winreg.QueryValueEx(key, "")
@@ -57,7 +57,7 @@ class WindowsAppFinder(BaseAppFinder):
                                    **kwargs):
         if search_in_registry:
             search_paths = cls._get_paths_from_registry(**kwargs)
-            path = self._find_app_in_paths(binary_name, search_paths, **kwargs)
+            path = cls._find_app_in_paths(binary_name, search_paths, **kwargs)
             if path is not None:
                 return path
 
